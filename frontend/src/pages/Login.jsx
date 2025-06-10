@@ -8,14 +8,14 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Example: save token or user after verifying (replace with real API call!)
+       
         console.log("Logging in:", username, password);
 
-        // fake login → set token
+        // set token if fake login
         localStorage.setItem('token', 'fake-jwt-token');
         localStorage.setItem('user', JSON.stringify({ username }));
 
-        // Redirect if needed (with navigate) or reload page
+        // Redirect it 
         window.location.reload();
     };
 
