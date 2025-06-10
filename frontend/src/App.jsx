@@ -13,6 +13,8 @@ import Product from './pages/Product'
 import PlaceOrder from './pages/PlaceOrder'
 import Orders from './pages/Orders'
 import NavBar from './components/NavBar'
+import Hero from './components/Hero'
+import Register from './pages/Register'
 
 function App() {
   
@@ -21,6 +23,7 @@ function App() {
    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px=[9vw]'>
 
     <NavBar></NavBar>
+   
     
     <Routes>
       <Route path='/' element={<Home></Home>}></Route>
@@ -31,6 +34,7 @@ function App() {
       <Route path='/product/:productid' element={<Product></Product>}></Route>
       <Route path='/place-order' element={<PlaceOrder></PlaceOrder>}></Route>
       <Route path='/orders' element={<Orders></Orders>}></Route>
+      <Route path='/register' element={<Register></Register>}></Route>
 
      
 
