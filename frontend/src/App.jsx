@@ -15,6 +15,7 @@ import Orders from './pages/Orders'
 import NavBar from './components/NavBar'
 import Hero from './components/Hero'
 import Register from './pages/Register'
+import Footer from './components/Footer'
 
 function App() {
   
@@ -40,6 +41,7 @@ function App() {
 
 
     </Routes>
+    <Footer></Footer>
     
 
    </div>
