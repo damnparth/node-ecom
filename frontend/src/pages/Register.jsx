@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -9,6 +11,13 @@ const Register = () => {
     const[password,setPassword]=useState("");
     const[confirm,setConfirm]=useState("")
     const[fullname,setFullname]=useState("")
+
+    const navigate = useNavigate();
+
+    // useEffect(()=>
+    // {
+
+    // })
 
 
 
@@ -29,6 +38,21 @@ const Register = () => {
         password,
         fullname
       }
+      axios
+      .post('http://localhost:4000/apis',formData)
+      .then((res)=>{
+        console.log(res.data)
+        alert("registered successfully")
+        navigate("/login")
+
+      }
+        
+      
+       
+
+      )
+      .catch(error=>console.log(error))
+     
       // console.log(formData)
       
       }
