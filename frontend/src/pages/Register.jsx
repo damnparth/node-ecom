@@ -42,8 +42,20 @@ const Register = () => {
       .post('http://localhost:4000/apis',formData)
       .then((res)=>{
         console.log(res.data)
+        let isSuccess=true       
+
+        if(res.data.message==="username already exists")
+        {
+          isSuccess=false
+          
+          alert(res.data.message)
+        }
+
+        if(isSuccess)
+        {    
         alert("registered successfully")
         navigate("/login")
+        }
 
       }
         
@@ -52,6 +64,7 @@ const Register = () => {
 
       )
       .catch(error=>console.log(error))
+
      
       // console.log(formData)
       
@@ -61,30 +74,52 @@ const Register = () => {
     }
 
   return (
-    <>
+   <>
+  <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+    <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
-  
-   
-    <div>Register</div>
-    <form className='inline-block bg-gray-100 p-4 ml-[500px] mt-[100px] mb-[250px] ' onSubmit={handleSubmit}>
-      <input type="text" placeholder='enter username' className='block'onChange={(e)=>setUsername(e.target.value)}/>
-      {/* {username} */}
-      <input type="text" placeholder='enter full name' className='block' onChange={(e)=>setFullname(e.target.value)}/>
-      {/* {fullname} */}
-      <input type="password" placeholder='enter password' className='block' onChange={(e)=>{setPassword(e.target.value)}}/>
-      {/* {password} */}
-      <input type="password" placeholder='confirm password' className='block' onChange={(e)=>setConfirm(e.target.value)} />
-      {/* {confirm} */}
-      <button type='submit' className='ml-[50px] cursor-pointer'>submit</button>
-    
+      <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder='enter username' 
+          className='border border-gray-300 p-3 rounded outline-none focus:ring-2 focus:ring-gray-600' 
+          onChange={(e)=>setUsername(e.target.value)}
+        />
+        {/* {username} */}
+        <input 
+          type="text" 
+          placeholder='enter full name' 
+          className='border border-gray-300 p-3 rounded outline-none focus:ring-2 focus:ring-gray-600' 
+          onChange={(e)=>setFullname(e.target.value)}
+        />
+        {/* {fullname} */}
+        <input 
+          type="password" 
+          placeholder='enter password' 
+          className='border border-gray-300 p-3 rounded outline-none focus:ring-2 focus:ring-gray-600' 
+          onChange={(e)=>{setPassword(e.target.value)}}
+        />
+        {/* {password} */}
+        <input 
+          type="password" 
+          placeholder='confirm password' 
+          className='border border-gray-300 p-3 rounded outline-none focus:ring-2 focus:ring-gray-600' 
+          onChange={(e)=>setConfirm(e.target.value)} 
+        />
+        {/* {confirm} */}
+        <button 
+          type='submit' 
+          className='bg-black text-white py-3 rounded hover:bg-gray-800 transition duration-200'
+        >
+          submit
+        </button>
+      </form>
 
+    </div>
+  </div>
+</>
 
-    </form>
-
-  
-
-
-     </>
     
   )
 }
