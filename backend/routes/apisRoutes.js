@@ -51,6 +51,28 @@ router.post('/',async(req,res)=>
     }
 })
 
+router.post('/login',async(req,res)=>
+{
+    const {username,password}=req.body;
+     console.log(username)
+     console.log(password)
+    const user = await Apis.findOne({username})
+    if(!user)
+    {
+        return res.send({message:"user does not exist"})
+
+    }
+    const isMatch=await bcrypt.compare(password,user.password)
+    if(!isMatch)
+    {
+       return res.send({message:"incorrect password"})
+    }
+
+
+    return res.send({message:"login successful"})
+
+})
+
 
 
 

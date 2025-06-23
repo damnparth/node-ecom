@@ -1,22 +1,49 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Register from './Register';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
+
     const handleLogin = (e) => {
         e.preventDefault();
+        if(!username || !password)
+        {
+            return alert("please enter something")
+        }
+        else{
+            const loginData={
+                username,
+                password
+            }
+            axios
+            .post('http://localhost:4000/apis/login',loginData)
+            .then((res)=>
+            {
+                const message = res.data.message;
+                alert(message)
+                
+                navigate("/")
+            })
+            .catch(error=>console.log(error))
+        }
        
-        console.log("Logging in:", username, password);
+       
+        // console.log("Logging in:", username, password);
 
-        // set token if fake login
-        localStorage.setItem('token', 'fake-jwt-token');
-        localStorage.setItem('user', JSON.stringify({ username }));
+        // // set token if fake login
+        // localStorage.setItem('token', 'fake-jwt-token');
+        // localStorage.setItem('user', JSON.stringify({ username }));
+
+
 
         // Redirect it 
-        window.location.reload();
+    
     };
 
     return (
