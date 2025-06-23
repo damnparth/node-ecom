@@ -16,6 +16,7 @@ import NavBar from './components/NavBar'
 import Hero from './components/Hero'
 import Register from './pages/Register'
 import Footer from './components/Footer'
+import Logout from './pages/Logout'
 
 function App() {
   
@@ -36,6 +37,7 @@ function App() {
       <Route path='/place-order' element={<PlaceOrder></PlaceOrder>}></Route>
       <Route path='/orders' element={<Orders></Orders>}></Route>
       <Route path='/register' element={<Register></Register>}></Route>
+      <Route path='/logout' element={<Logout></Logout>}></Route>
 
      
 

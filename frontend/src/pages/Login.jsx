@@ -25,8 +25,19 @@ const Login = () => {
             .post('http://localhost:4000/apis/login',loginData)
             .then((res)=>
             {
-                const message = res.data.message;
-                alert(message)
+                const {message,token,user} = res.data;
+                if(message==="login successful")
+                {
+                    sessionStorage.setItem("jwt",token)
+                    sessionStorage.setItem("user",user)
+                    //console.log(token+user)
+                }
+                else{
+                    alert(message)
+
+                }
+                
+                
                 
                 navigate("/")
             })

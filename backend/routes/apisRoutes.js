@@ -3,6 +3,7 @@ const router = express.Router();
 import { Apis } from "../models/apisModels.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import "dotenv/config.js"
 
 
 // to do
@@ -54,9 +55,10 @@ router.post('/',async(req,res)=>
 router.post('/login',async(req,res)=>
 {
     const {username,password}=req.body;
-     console.log(username)
-     console.log(password)
-    const user = await Apis.findOne({username})
+    //  console.log(username)
+    //  console.log(password)
+    try{
+         const user = await Apis.findOne({username})
     if(!user)
     {
         return res.send({message:"user does not exist"})
@@ -68,9 +70,37 @@ router.post('/login',async(req,res)=>
        return res.send({message:"incorrect password"})
     }
 
+    //create jwt token
+    const token = jwt.sign({
+        id:user._id,
+        username:user.username
+    },
+    process.env.JWT_SECRET,
+    {expiresIn:'1h'}
 
-    return res.send({message:"login successful"})
+);
 
+
+    return res.send({message:"login successful",
+        token,
+        user:{
+            username:user.username,
+            fullname:user.fullname
+        }
+
+
+    },
+      
+    )
+
+
+    }
+    catch(error){
+            console.log(error.message)
+            return res.send({message:error.message})
+
+    }
+   
 })
 
 

@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { assets } from "../assets/assets";
 
+import Login from '../pages/Login';
+
 const NavBar = () => {
     const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
 
+    //show cart and profile only if the user is logged in
+
     useEffect(() => {
-        const token = localStorage.getItem("token"); // or 'user' depending on your app
+        const token = sessionStorage.getItem("jwt"); 
         if (token) {
             setLoggedIn(true);
         } else {
@@ -44,7 +48,9 @@ const NavBar = () => {
                             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 " >
                                 <p className='cursor-pointer hover:text-black'>my profile</p>
                                 <p className='cursor-pointer hover:text-black'>orders</p>
+                                <Link to='/logout'>
                                 <p className='cursor-pointer hover:text-black'>logout</p>
+                                </Link>
                             </div>
                         </div>
                     </div>
