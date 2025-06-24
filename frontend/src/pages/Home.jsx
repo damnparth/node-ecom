@@ -11,7 +11,7 @@ function Home() {
 
     if (token && user) {
       const parsedUser = JSON.parse(user);
-      setUsername(parsedUser.username); // ✅ set username if logged in
+      setUsername(parsedUser.username); 
     }
   }, []);
 

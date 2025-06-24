@@ -11,13 +11,19 @@ const NavBar = () => {
     //show cart and profile only if the user is logged in
 
     useEffect(() => {
-        const token = sessionStorage.getItem("jwt"); 
-        if (token) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    }, []);
+    const checkAuth = () => {
+        const token = sessionStorage.getItem("jwt");
+        setLoggedIn(!!token);
+    };
+
+    checkAuth(); 
+    
+    window.addEventListener("authChanged", checkAuth);
+
+    return () => {
+        window.removeEventListener("authChanged", checkAuth);
+    };
+}, []);
 
     return (
         <div className='flex items-center justify-between py-5 font-medium'>

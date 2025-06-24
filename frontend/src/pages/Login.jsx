@@ -29,7 +29,8 @@ const Login = () => {
                 if(message==="login successful")
                 {
                     sessionStorage.setItem("jwt",token)
-                    sessionStorage.setItem("user",user)
+                    sessionStorage.setItem("user",JSON.stringify(res.data.user))
+                    window.dispatchEvent(new Event("authChanged"));
                     //console.log(token+user)
                 }
                 else{
