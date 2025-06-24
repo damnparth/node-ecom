@@ -15,7 +15,7 @@ const Logout = () => {
     <>
 
     <div>Logout?</div>
-    <button className='cursor-pointer' onClick={handleLogout()}>
+    <button className='cursor-pointer bg-black text-white p-2 rounded mt-5 ' onClick={handleLogout()}>
         logout
     </button>
 
