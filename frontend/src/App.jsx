@@ -18,6 +18,7 @@ import Register from './pages/Register'
 import Footer from './components/Footer'
 import Logout from './pages/Logout'
 import Cart from './pages/Cart'
+import Profile from './pages/Profile'
 
 function App() {
   
@@ -40,6 +41,7 @@ function App() {
       <Route path='/register' element={<Register></Register>}></Route>
       <Route path='/logout' element={<Logout></Logout>}></Route>
       <Route path='/cart' element={<Cart></Cart>}></Route>
+      <Route path='/profile' element={<Profile></Profile>}></Route>
 
      
 
