@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const[address,setAddress]=useState("");
+  const[phone,setPhone]=useState(null);
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
@@ -22,6 +24,21 @@ const Profile = () => {
         <>
           <p className="mb-2"><strong>Full Name:</strong> {user.fullname}</p>
           <p className="mb-2"><strong>Username:</strong> {user.username}</p>
+          {address?
+          (
+            <>
+           
+            <textarea name="" id="" placeholder='address' className='border-black w-100 h-30'></textarea>
+            <button className='border-black'></button>
+             </>
+          
+          ):
+          (
+            <textarea name=''></textarea>
+          )
+          }
+         
+          
           
         </>
       ) : (

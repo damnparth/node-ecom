@@ -3,6 +3,7 @@ import 'dotenv/config'
 import cors from "cors"
 import connectdb from "./config/mongodb.js";
 import router from "./routes/apisRoutes.js";
+import cartRouter from "./routes/cartRoutes.js"
 console.log("🚀 Server file started");
 
 
@@ -29,6 +30,7 @@ app.get("/",(req,res)=>
 
 
 app.use('/apis',router)
+app.use('/cart',cartRouter)
 
 app.listen(port,()=>
 {

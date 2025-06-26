@@ -3,6 +3,7 @@ import { products } from '../assets/assets'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 const Collection = () => {
 
@@ -22,6 +23,41 @@ const Collection = () => {
   },[])
 
 
+const handleAddToCart= async (productId)=>
+  
+{
+  const token=sessionStorage.getItem("jwt")
+  try{
+    await axios.post(
+      'http://localhost:4000/cart/add',
+      {
+        productId,
+        quantity:1
+      },
+      {
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      }
+    )
+    .then(res=>{
+      console.log(res)
+      const message=res.data.message;
+      alert(message)
+    }
+    )  
+    .catch(error=>console.log(error))
+  }
+  catch(error)
+  {
+    console.log(error)
+    alert("failed to add to cart")
+  }
+
+}
+
+
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-9">All Collections</h1>
@@ -37,24 +73,34 @@ const Collection = () => {
             <p className="text-sm text-gray-600">{product.description}</p>
             <p className="text-black font-bold mt-2">${product.price}</p>
             <p className="text-sm text-gray-500">Category: {product.category}</p>
-            <button className='cursor-pointer bg-black text-white p-1.5 rounded mt-2 px-2'>
+            
               {isLoggedIn?(
-                <Link to='/cart'>
+                <>
+                <button className='cursor-pointer bg-black text-white p-1.5 rounded mt-2 px-2'
+                onClick={()=>{handleAddToCart(product._id)}}
+                >
+                
               
               add to cart
-              </Link>
+              
+              </button>
+              </>
 
               ):(
+                <>
+                 <button className='cursor-pointer bg-black text-white p-1.5 rounded mt-2 px-2'>
                  <Link to='/login'>
                  
               
               login to buy
               </Link>
+              </button>
+              </>
 
               )}
               
               
-            </button>
+
             
           </div>
         ))}
