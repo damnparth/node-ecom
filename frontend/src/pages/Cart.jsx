@@ -5,8 +5,9 @@ const Cart = () => {
   const [cart, setCart] = useState(null); // null until data is fetched
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const[addQuantity,setAddQuantity]=useState();
 
-  useEffect(() => {
+ const fetchCart=() => {
     const token = sessionStorage.getItem("jwt");
 
     axios.get('http://localhost:4000/cart', {
@@ -23,7 +24,71 @@ const Cart = () => {
       setError("Could not load cart");
       setLoading(false);
     });
-  }, []);
+  }
+ useEffect(()=>
+{
+  fetchCart();
+
+},[]);
+  const handleIncrease= async (productId)=>
+  {
+    const token=sessionStorage.getItem("jwt")
+    try{
+      await axios.post("http://localhost:4000/cart/increase",{
+        productId
+      }, {
+        headers:
+        {
+          Authorization: `Bearer ${token}`
+        }
+    
+    })
+    .then((res)=>{
+      const message = res.data.message;
+      alert(message)
+    })
+    fetchCart();
+
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }
+
+  const handleDecrease= async (productId)=>
+  {
+    const token=sessionStorage.getItem("jwt")
+    try{
+      await axios.post("http://localhost:4000/cart/decrease",{
+        productId
+      },{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
+      .then((res)=>{
+        const message=res.data.message;
+        alert(message)
+      })
+      .catch((error)=>{
+        const errorMessage=res.data.error;
+        alert(errorMessage)
+        
+      })
+       fetchCart();
+
+    }
+   
+    
+    catch(error)
+    {
+      console.log(error)
+    }
+
+  }
+
+
 
   if (loading) return <p>Loading cart...</p>;
   if (error) return <p>{error}</p>;
@@ -37,7 +102,13 @@ const Cart = () => {
           <li key={index} className="border p-4 rounded">
             <p><strong>Product ID:</strong> {item.productId}</p>
             <p><strong>Quantity:</strong> {item.quantity}</p>
-            <button className='cursor-pointer w-2'>+</button>
+            <button className='cursor-pointer w-2 border-black py-1' 
+            onClick={()=>{handleIncrease(item.productId)}}
+            >+</button>
+            
+            <button className='cursor-pointer w-2 m-2 border-black'
+            onClick={()=>handleDecrease(item.productId)}>-</button>
+            <button className='cursor-pointer mx-20'>delete</button>
           </li>
         ))}
       </ul>

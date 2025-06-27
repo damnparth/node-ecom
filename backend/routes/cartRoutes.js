@@ -58,6 +58,76 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
+router.post('/increase',authenticate,async(req,res)=>
+{
+    try{
+        const {productId}=req.body;
+    const userId=req.user.id;
+
+    const cart = await Cart.findOne({userId})
+    const item=cart.items.find(i=>i.productId===productId)
+    if(item)
+    {
+        item.quantity+=1;
+    }
+    await cart.save()
+
+    res.send({message:"quantity increased"})
+    }
+    catch(error)
+    {
+        console.log(error)
+       res.send({"error":error.message})
+    }
+
+
+})
+
+router.post('/decrease',authenticate,async(req,res)=>
+{
+    try{
+        const {productId}=req.body;
+        const userId=req.user.id;
+
+
+        const cart = await Cart.findOne({userId})
+        const item=cart.items.find(i=>i.productId===productId)
+        if(item)
+        {
+            item.quantity-=1;
+
+        }
+        await cart.save()
+        res.send({message:"quantity decreased"})
+
+    }
+    catch(error)
+    {
+        console.log(error)
+        res.send({"error":error})
+      
+
+    }
+})
+
+
+// router.delete("/:id",authenticate,async(req,res)=>
+// {
+//     try{
+//         const{productId}=req.body;
+//         const userID=req.user.id;
+
+//         const cart =await Cart.findOne({userId})
+        
+
+//     }
+//     catch(error)
+//     {
+
+//     }
+
+    
+// })
 export default router;
 
 
