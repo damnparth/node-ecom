@@ -45,6 +45,19 @@ router.post("/add",authenticate,async(req,res)=>
     }
     
 })
+
+
+//get cart
+router.get('/', authenticate, async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.user.id });
+    res.send(cart);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Error fetching cart" });
+  }
+});
+
 export default router;
 
 
