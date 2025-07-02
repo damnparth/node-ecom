@@ -11,6 +11,10 @@ import "dotenv/config.js"
 //add item to cart
 router.post("/add",authenticate,async(req,res)=>
 {
+
+    // getting user id and product details because
+    // 1. we want "USER" ka "product"
+
     try{
         const {productId, quantity}=req.body;
     const userId=req.user.id;
@@ -111,23 +115,41 @@ router.post('/decrease',authenticate,async(req,res)=>
 })
 
 
-// router.delete("/:id",authenticate,async(req,res)=>
-// {
-//     try{
-//         const{productId}=req.body;
-//         const userID=req.user.id;
+router.delete("/",authenticate,async(req,res)=>
+{
+    try{
+        console.log(req.body)
 
-//         const cart =await Cart.findOne({userId})
+        const{productId}=req.body;
+        const userId=req.user.id;
+
+        // not deleting the whole cart because,
+        // 1. one user has one cart
+        // 2. the cart has an array of [items]
+        // 3. just delete the required Element in the array instead of the "Cart", the user still needs the Cart.
+
+
+        const cart =await Cart.findOne({userId})
+        if(!cart) return res.status(404).send({message:"cart not found."})
+
+        //return array with every item except the entered productId
+        cart.items=cart.items.filter(item=>item.productId!==productId)
+        await cart.save()
+
+        res.send({message:"item deleted successfully"})
+
         
 
-//     }
-//     catch(error)
-//     {
+    }
+    catch(error)
+    {
+        console.log(error)
+        res.send({error:"error deleting item"})
 
-//     }
+    }
 
     
-// })
+})
 export default router;
 
 
