@@ -156,6 +156,8 @@ if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) {
             <button className='cursor-pointer mx-20'
             onClick={()=>handleDelete(item.productId)}
             >delete</button>
+
+            <button className='cursor-pointer'>confirm</button>
           </li>
         ))}
       </ul>

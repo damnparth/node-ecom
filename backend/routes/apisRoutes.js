@@ -4,6 +4,7 @@ import { Apis } from "../models/apisModels.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import "dotenv/config.js"
+import authenticate from "../middleware/auth.js";
 
 
 // to do
@@ -102,6 +103,30 @@ router.post('/login',async(req,res)=>
     }
    
 })
+
+router.post('/address', authenticate, async (req, res) => {
+  try {
+    const { add } = req.body; 
+    const userId = req.user.id;
+
+    // Find the user first
+    const user = await Apis.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    // Set the address and save the user
+    user.address = add;
+    await user.save();
+
+    res.send({ message: "Address updated successfully" });
+  } 
+  catch (error) {
+    console.log("Error updating address:", error);
+    res.status(500).send({ error: " error while updating address" });
+  }
+});
 
 
 
