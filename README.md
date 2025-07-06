@@ -6,3 +6,4 @@ Features/Stuff learnt:
 2. middlewares
 3. passwords hashed (bcrypt)
 4. mongoDB (mongoose)
+5. context api
